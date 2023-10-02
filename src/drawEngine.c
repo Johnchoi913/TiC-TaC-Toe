@@ -3,6 +3,10 @@
 
 enum tile{empty,X,O};
 
+/** Draw Method
+ * This method draws the board
+ * @param boardArr[3][3] takes in the board array to change and print
+*/
 void draw(int boardArr[3][3])
 {
     for(int row = 0; row < 3; row++)
