@@ -3,12 +3,16 @@ CFLAGS = -g -Wall -Werror
 LDFLAGS = -lm
 TARGET = main 
 DEPS = ttt.h
-OBJ = drawEngine.o game.o main.o
+#OBJ = 	drawEngine.o game.o main.o
+BINDER = ../bin
+OBJDIR = ../obj
+SRCS = drawEngine.c game.c main.c
+OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 
-all : $(TARGET)
+all : $(BINDER)/$(TARGET)
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(OBJDIR)/%.o: %.c $(DEPS)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
-$(TARGET): $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+$(BINDER)/$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(CFLAGS) $(LDFLAGS)
