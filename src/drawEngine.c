@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-enum tile{empty,X,O};
+#include "ttt.h"
 
 /** Draw Method
  * This method draws the board
@@ -33,6 +32,7 @@ void draw(int boardArr[3][3])
                 printf("|");
             }
         }
+        printf("\n");
         if(row < 2)
         {
             for(int i = 0; i < 12; i++)
@@ -40,6 +40,7 @@ void draw(int boardArr[3][3])
                 printf("_");
             }
         }
+        printf("\n");
     }
 }
 
