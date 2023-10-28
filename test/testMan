@@ -1,0 +1,8 @@
+test1:
+    Should result in X victory
+
+test2:
+    Should result in O victory
+
+test3: 
+    Should result in tie
