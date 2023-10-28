@@ -16,3 +16,4 @@
 ## 10/28/2023
 - Added more info to README
 - Added test dir
+- Added Tie

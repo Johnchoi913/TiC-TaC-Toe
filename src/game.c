@@ -64,7 +64,8 @@ void play(int boardArr[3][3])
     printf("Make a move in the format of row col (Starts at 0)\n");
     int row_in,col_in;
     char player = 0;
-    while(TRUE)
+    int count = 0;
+    while(count < 9)
     {
         scanf("%d %d",&row_in,&col_in);
         if(!handleInput(row_in,col_in,boardArr))
@@ -73,18 +74,18 @@ void play(int boardArr[3][3])
         }
         else
         {
-            printf("Player:%d\n",player);
             boardArr[row_in][col_in] = player == 0 ? X : O;
             player = !player;
-            printf("Player:%d\n",player);
             if(checkGameOver(player,boardArr))
             {
                 printf("Player %c wins\n",player == 0 ? 'O' : 'X');
                 break;
             }
+            count++;
         }
         draw(boardArr);
     }
+    printf("Tie\n");
     
 }
 
