@@ -6,13 +6,13 @@
  * This method draws the board
  * @param boardArr[3][3] takes in the board array to change and print
 */
-void draw(int boardArr[DIMENSION][DIMENSION])
+void draw(struct board board)
 {
-    for(int row = 0; row < DIMENSION; row++)
+    for(int row = 0; row < board.dimension; row++)
     {
-        for(int col = 0; col < DIMENSION; col++)
+        for(int col = 0; col < board.dimension; col++)
         {
-            switch (boardArr[row][col])
+            switch (board.boardArr[row][col])
             {
             case empty:
                 printf("   ");
@@ -27,15 +27,15 @@ void draw(int boardArr[DIMENSION][DIMENSION])
                 break;
             }
             
-            if(col < DIMENSION - 1)
+            if(col < board.dimension - 1)
             {
                 printf("|");
             }
         }
         printf("\n");
-        if(row < DIMENSION - 1)
+        if(row < board.dimension - 1)
         {
-            for(int i = 0; i < DIMENSION * 4; i++)
+            for(int i = 0; i < board.dimension * 4; i++)
             {
                 printf("_");
             }

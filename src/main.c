@@ -1,23 +1,42 @@
 #include "ttt.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+
+struct board makeBoard(int dimension)
+{
+    struct board board;
+    board.dimension = dimension;
+    board.boardArr = calloc(sizeof(int*),dimension);
+    for(int i = 0; i < dimension; i++)
+    {
+        board.boardArr[i] = calloc(sizeof(int),dimension);
+    }
+    return board;
+}
+
+void freeBoard(struct board* board)
+{
+    if(board == NULL)
+    {
+        return;
+    }
+    for(int i = 0; i < board->dimension; i++)
+    {
+        free(board->boardArr[i]);
+    }
+    free(board->boardArr);
+}
 
 int main()
 {
-    int size = 0;
+    int dimension = 0;
     printf("Enter the size of the board: ");
-    scanf("%d",&size);
-    #undef DIMENSION
-    #define DIMENSION size
-    int boardArr[DIMENSION][DIMENSION];
-    for( int x = 0; x < DIMENSION; x++)
-    {
-        for( int y = 0; y < DIMENSION;y++)
-        {
-            boardArr[x][y] = empty;
-        }
-    }
-    draw(boardArr);
-    play(boardArr);
-    draw(boardArr);
+    scanf("%d",&dimension);
+    struct board board = makeBoard(dimension);
+    draw(board);
+    play(board);
+    draw(board);
+    freeBoard(&board);
     return 0;
 }
