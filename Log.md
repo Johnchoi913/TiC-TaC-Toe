@@ -17,3 +17,7 @@
 - Added more info to README
 - Added test dir
 - Added Tie
+
+## 10/29/2023
+- Added a dynamic board size
+- Tried adding changing board size based off input

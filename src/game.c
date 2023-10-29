@@ -6,29 +6,57 @@
  * This method checks if the game is over
  * @param boardArr[3][3] takes in the board array to to check
 */
-int checkGameOver(char player, int boardArr[3][3])
+int checkGameOver(char player, int boardArr[DIMENSION][DIMENSION])
 {
     player = player == 0 ? O : X;
     //Responsible for checking the horizontal and vertical vicories
-    for(int i = 0; i < 3; i++)
+    for(int x = 0; x < DIMENSION; x++)
     {
-        if(boardArr[i][0] == player && boardArr[i][1] == player && boardArr[i][2] == player)
+        for(int y = 0; y < DIMENSION; y++)
         {
-            return TRUE;
+            if(boardArr[x][y] != player)
+            {
+                break;
+            }
+            if(y == DIMENSION - 1)
+            {
+                return TRUE;
+            }
         }
-        if(boardArr[0][i] == player && boardArr[1][i] == player && boardArr[2][i] == player)
+        for(int y = 0; y < DIMENSION; y++)
         {
-            return TRUE;
+            if(boardArr[y][x] != player)
+            {
+                break;
+            }
+            if(y == DIMENSION - 1)
+            {
+                return TRUE;
+            }
         }
     }
     //Checking the diagonal victories
-    if(boardArr[0][0] == player && boardArr[1][1] == player && boardArr[2][2] == player)
+    for(int i = 0; i < DIMENSION; i++)
     {
-        return TRUE;
+        if(boardArr[i][i] != player)
+        {
+            break;
+        }
+        if(i == DIMENSION - 1)
+        {
+            return TRUE;
+        }
     }
-    if(boardArr[0][2] == player && boardArr[1][1] == player && boardArr[2][0] == player)
+    for(int i = 0; i < DIMENSION; i++)
     {
-        return TRUE;
+        if(boardArr[i][DIMENSION-i] != player)
+        {
+            break;
+        }
+        if(i == DIMENSION - 1)
+        {
+            return TRUE;
+        }
     }
     return FALSE;
 }
@@ -39,10 +67,10 @@ int checkGameOver(char player, int boardArr[3][3])
  * @param row_in takes in the row input
  * @param col_in takes in the column input
 */
-int handleInput(int row_in, int col_in, int boardArr[3][3])
+int handleInput(int row_in, int col_in, int boardArr[DIMENSION][DIMENSION])
 {
     //Out of Bounds
-    if(row_in < 0 || row_in > 2 || col_in < 0 || col_in > 2)
+    if(row_in < 0 || row_in > DIMENSION - 1 || col_in < 0 || col_in > DIMENSION - 1)
     {
         return FALSE;
     }
@@ -58,14 +86,14 @@ int handleInput(int row_in, int col_in, int boardArr[3][3])
  * This method checks if the game is over
  * @param boardArr[3][3] takes in the board array to pass into the other two methods
 */
-void play(int boardArr[3][3])
+void play(int boardArr[DIMENSION][DIMENSION])
 {
     printf("Welcome to my TicTacToe game\n");
     printf("Make a move in the format of row col (Starts at 0)\n");
     int row_in,col_in;
     char player = 0;
     int count = 0;
-    while(count < 9)
+    while(count < DIMENSION * DIMENSION)
     {
         scanf("%d %d",&row_in,&col_in);
         if(!handleInput(row_in,col_in,boardArr))
@@ -79,7 +107,7 @@ void play(int boardArr[3][3])
             if(checkGameOver(player,boardArr))
             {
                 printf("Player %c wins\n",player == 0 ? 'O' : 'X');
-                break;
+                return;
             }
             count++;
         }

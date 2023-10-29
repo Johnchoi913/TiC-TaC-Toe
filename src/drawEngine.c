@@ -6,11 +6,11 @@
  * This method draws the board
  * @param boardArr[3][3] takes in the board array to change and print
 */
-void draw(int boardArr[3][3])
+void draw(int boardArr[DIMENSION][DIMENSION])
 {
-    for(int row = 0; row < 3; row++)
+    for(int row = 0; row < DIMENSION; row++)
     {
-        for(int col = 0; col < 3; col++)
+        for(int col = 0; col < DIMENSION; col++)
         {
             switch (boardArr[row][col])
             {
@@ -27,15 +27,15 @@ void draw(int boardArr[3][3])
                 break;
             }
             
-            if(col < 2)
+            if(col < DIMENSION - 1)
             {
                 printf("|");
             }
         }
         printf("\n");
-        if(row < 2)
+        if(row < DIMENSION - 1)
         {
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < DIMENSION * 4; i++)
             {
                 printf("_");
             }
