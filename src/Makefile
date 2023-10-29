@@ -6,7 +6,7 @@ DEPS = ttt.h
 #OBJ = 	drawEngine.o game.o main.o
 BINDER = ../bin
 OBJDIR = ../obj
-SRCS = drawEngine.c game.c main.c
+SRCS = drawEngine.c aiEngine.c game.c main.c 
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 
 all : $(BINDER)/$(TARGET)

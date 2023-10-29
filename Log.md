@@ -23,3 +23,4 @@
 - Tried adding changing board size based off input
 - Created a struct to pass through which holds the dimensions
 - Will need to add free function soon
+- Added minimax function to deterimine best move(Took awhile as I accidently flipped the maximazier and the minimizer)

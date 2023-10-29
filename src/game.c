@@ -8,7 +8,7 @@
 */
 int checkGameOver(char player, struct board board)
 {
-    player = player == 0 ? O : X;
+    player = player == 0 ? X : O;
     //Responsible for checking the horizontal and vertical vicories
     for(int x = 0; x < board.dimension; x++)
     {
@@ -49,7 +49,7 @@ int checkGameOver(char player, struct board board)
     }
     for(int i = 0; i < board.dimension; i++)
     {
-        if(board.boardArr[i][board.dimension-i] != player)
+        if(board.boardArr[i][board.dimension-i-1] != player)
         {
             break;
         }
@@ -94,7 +94,10 @@ void play(struct board board)
     char player = 0;
     int count = 0;
     while(count < board.dimension * board.dimension)
-    {
+    {        
+        struct moveValue moveValue = minimax(board,player);
+        printf("best move is %d %d\n",moveValue.row,moveValue.col);
+        printf("best move val is %d\n",moveValue.expVal);
         scanf("%d %d",&row_in,&col_in);
         if(!handleInput(row_in,col_in,board))
         {
@@ -103,15 +106,17 @@ void play(struct board board)
         else
         {
             board.boardArr[row_in][col_in] = player == 0 ? X : O;
-            player = !player;
+           
             if(checkGameOver(player,board))
             {
-                printf("Player %c wins\n",player == 0 ? 'O' : 'X');
+                printf("Player %c wins\n",player == 0 ? 'X' : 'O');
                 return;
             }
+            player = !player;
             count++;
         }
         draw(board);
+
     }
     printf("Tie\n");
     
