@@ -100,6 +100,8 @@ struct moveValue minimax(struct board board, char player)
     for(int i = 0; i < emptyCount; i++)
     {
         bestMove[i].expVal = 0;
+        bestMove[i].row = -1;
+        bestMove[i].col = -1;
     }
     int moveIndex = 0;
     for(int x = 0; x < board.dimension; x++)
@@ -120,27 +122,31 @@ struct moveValue minimax(struct board board, char player)
                     return moveValue;
                 }
                 //struct moveValue newMoveValue = getBestMove(newBoard, player == X ? O : X, x, y);
-                struct moveValue newMoveValue = minimax(newBoard, !player);
+                struct moveValue newMoveValue;
+                newMoveValue.expVal = 0;
                 newMoveValue.col = y;
                 newMoveValue.row = x;
+                struct moveValue temp;
+                temp = minimax(newBoard, !player);
+                newMoveValue.expVal = temp.expVal;
                 freeBoard(&newBoard);
                 bestMove[moveIndex] = newMoveValue;
                 moveIndex++;
             }
         }
     }
-    if(emptyCount == 1)
+    if(emptyCount == 0)
     {
-        return bestMove[0];
+        struct moveValue temp;
+        temp.row = -1;
+        temp.col = -1;
+        temp.expVal = 0;
+        return temp;
     }
     struct moveValue moveValue;
     moveValue.expVal = player == 0 ? -1 : 1;
     for(int i = 0; i < emptyCount; i++)
     {
-        if(bestMove[i].expVal == 0)
-        {
-            puts("TIE FOUND");
-        }
         if(player == 0)
         {
             if(bestMove[i].expVal > moveValue.expVal)
