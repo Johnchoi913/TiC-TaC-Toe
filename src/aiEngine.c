@@ -37,63 +37,7 @@ int getEmptyCount(struct board board)
     return emptyCount;
 }
 
-// struct moveValue getBestMove(struct board board, char player, int row, int col)
-// {
-//     struct moveValue moveValue;
-//     moveValue.expVal = 0;
-//     if(checkGameOver(player == X ? O : X,board))
-//     {
-//         moveValue.row = row;
-//         moveValue.col = col;
-//         moveValue.expVal = player == X ? -100 : 100;
-//         return moveValue;
-//     }
-
-
-//     int emptyCount = getEmptyCount(board);
-//     struct moveValue bestMove[emptyCount];
-
-//     int moveIndex = 0;
-
-//     for(int x = 0; x < board.dimension; x++)
-//     {
-//         for(int y = 0; y < board.dimension; y++)
-//         {
-//             if(board.boardArr[x][y] == empty)
-//             {
-//                 struct board newBoard;
-//                 newBoard = deepCopyBoard(board);
-//                 newBoard.boardArr[x][y] = player;
-//                 struct moveValue newMoveValue = getBestMove(newBoard, player == X ? O : X, x, y);
-//                 newMoveValue.col = y;
-//                 newMoveValue.row = x;
-//                 freeBoard(&newBoard);
-//                 bestMove[moveIndex] = newMoveValue;
-//                 moveIndex++;
-//             }
-//         }
-//     }
-//     for(int i = 0; i < emptyCount; i++)
-//     {
-//         if(player == X)
-//         {
-//             if(bestMove[i].expVal > moveValue.expVal)
-//             {
-//                 moveValue = bestMove[i];
-//             }
-//         }
-//         else
-//         {
-//             if(bestMove[i].expVal < moveValue.expVal)
-//             {
-//                 moveValue = bestMove[i];
-//             }
-//         }
-//     }
-//     return moveValue;
-// }
-
-struct moveValue minimax(struct board board, char player)
+struct moveValue minimax(struct board board, char player, int currDepth)
 {
     int emptyCount = getEmptyCount(board);
     struct moveValue bestMove[emptyCount];
@@ -117,17 +61,16 @@ struct moveValue minimax(struct board board, char player)
                     struct moveValue moveValue;
                     moveValue.row = x;
                     moveValue.col = y;
-                    moveValue.expVal = player == 0 ? 1 : -1;
+                    moveValue.expVal = player == 0 ? board.dimension * board.dimension - currDepth : -1 * (board.dimension * board.dimension - currDepth);
                     freeBoard(&newBoard);
                     return moveValue;
                 }
-                //struct moveValue newMoveValue = getBestMove(newBoard, player == X ? O : X, x, y);
                 struct moveValue newMoveValue;
                 newMoveValue.expVal = 0;
                 newMoveValue.col = y;
                 newMoveValue.row = x;
                 struct moveValue temp;
-                temp = minimax(newBoard, !player);
+                temp = minimax(newBoard, !player, currDepth + 1);
                 newMoveValue.expVal = temp.expVal;
                 freeBoard(&newBoard);
                 bestMove[moveIndex] = newMoveValue;
@@ -144,7 +87,7 @@ struct moveValue minimax(struct board board, char player)
         return temp;
     }
     struct moveValue moveValue;
-    moveValue.expVal = player == 0 ? -1 : 1;
+    moveValue.expVal = player == 0 ? -(board.dimension * board.dimension): board.dimension * board.dimension;
     for(int i = 0; i < emptyCount; i++)
     {
         if(player == 0)

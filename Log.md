@@ -24,3 +24,7 @@
 - Created a struct to pass through which holds the dimensions
 - Will need to add free function soon
 - Added minimax function to deterimine best move(Took awhile as I accidently flipped the maximazier and the minimizer)
+
+## 11/4/2023
+- Added option to turn off AI
+- Fixed minmax function

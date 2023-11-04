@@ -28,15 +28,42 @@ void freeBoard(struct board* board)
     free(board->boardArr);
 }
 
+
+int handleGamemodeInput(struct board board)
+{
+    char* gameModeInput = malloc(sizeof(char));
+    printf("Select Game Mode\n");
+    printf("1. Local Single Player\n");
+    printf("2. Local AI\n");
+    //Allows to make sure buffer is always fine and atoi should return 0 if not an int
+    scanf("%1s",gameModeInput);
+    int gameMode = atoi(gameModeInput);
+    free(gameModeInput);
+    switch(gameMode)
+    {
+        case 1:
+            playLocal(board);
+            return 1;
+        case 2:
+            playLocalAI(board);
+            return 1;
+        default:
+            return -1;
+    }
+}
+
 int main()
 {
     int dimension = 0;
-    printf("Enter the size of the board: ");
+    printf("Enter the size of the board: \n");
     scanf("%d",&dimension);
     struct board board = makeBoard(dimension);
-    draw(board);
-    play(board);
+    while(handleGamemodeInput(board) == -1)
+    {
+        printf("Invalid Input\n");
+    }
     draw(board);
     freeBoard(&board);
+    
     return 0;
 }

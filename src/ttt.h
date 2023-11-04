@@ -17,7 +17,8 @@ struct moveValue
 enum tile{empty,X,O};
 
 void draw(struct board board);
-void play(struct board board);
+void playLocal(struct board board);
+void playLocalAI(struct board board);
 int checkGameOver(char player, struct board board);
 void freeBoard(struct board* board);
-struct moveValue minimax(struct board board, char player);
+struct moveValue minimax(struct board board, char player, int currDepth);

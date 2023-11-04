@@ -82,12 +82,13 @@ int handleInput(int row_in, int col_in, struct board board)
     return TRUE;
 }
 
-/** Game Over Method
+/** Play Game Locally no AI Method
  * This method checks if the game is over
  * @param boardArr[3][3] takes in the board array to pass into the other two methods
 */
-void play(struct board board)
+void playLocal(struct board board)
 {
+    draw(board);
     printf("Welcome to my TicTacToe game\n");
     printf("Make a move in the format of row col (Starts at 0)\n");
     int row_in,col_in;
@@ -95,9 +96,6 @@ void play(struct board board)
     int count = 0;
     while(count < board.dimension * board.dimension)
     {        
-        struct moveValue moveValue = minimax(board,player);
-        printf("best move is %d %d\n",moveValue.row,moveValue.col);
-        printf("best move val is %d\n",moveValue.expVal);
         scanf("%d %d",&row_in,&col_in);
         if(!handleInput(row_in,col_in,board))
         {
@@ -122,3 +120,46 @@ void play(struct board board)
     
 }
 
+/** Play Game Locally AI Method
+ * This method checks if the game is over
+ * @param boardArr[3][3] takes in the board array to pass into the other two methods
+*/
+void playLocalAI(struct board board)
+{
+    draw(board);
+    printf("Welcome to my TicTacToe game\n");
+    printf("Make a move in the format of row col (Starts at 0)\n");
+    int row_in,col_in;
+    char player = 0;
+    int count = 0;
+    while(count < board.dimension * board.dimension)
+    {        
+        if(player == 0)
+        {
+            struct moveValue moveValue = minimax(board,player,1);
+            printf("best move is %d %d\n",moveValue.row,moveValue.col);
+            printf("best move val is %d\n",moveValue.expVal);
+        }
+        scanf("%d %d",&row_in,&col_in);
+        if(!handleInput(row_in,col_in,board))
+        {
+            printf("Invalid input\n");
+        }
+        else
+        {
+            board.boardArr[row_in][col_in] = player == 0 ? X : O;
+           
+            if(checkGameOver(player,board))
+            {
+                printf("Player %c wins\n",player == 0 ? 'X' : 'O');
+                return;
+            }
+            player = !player;
+            count++;
+        }
+        draw(board);
+
+    }
+    printf("Tie\n");
+    
+}
