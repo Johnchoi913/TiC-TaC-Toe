@@ -37,7 +37,7 @@ int getEmptyCount(struct board board)
     return emptyCount;
 }
 
-struct moveValue minimax(struct board board, char player, int currDepth)
+struct moveValue minimax(struct board board, char player, int currDepth, int alpha, int beta)
 {
     int emptyCount = getEmptyCount(board);
     struct moveValue bestMove[emptyCount];
@@ -70,11 +70,23 @@ struct moveValue minimax(struct board board, char player, int currDepth)
                 newMoveValue.col = y;
                 newMoveValue.row = x;
                 struct moveValue temp;
-                temp = minimax(newBoard, !player, currDepth + 1);
+                temp = minimax(newBoard, !player, currDepth + 1, alpha, beta);
                 newMoveValue.expVal = temp.expVal;
                 freeBoard(&newBoard);
                 bestMove[moveIndex] = newMoveValue;
+                if(player == 0)
+                {
+                    alpha = alpha > newMoveValue.expVal ? alpha : newMoveValue.expVal;
+                }
+                else
+                {
+                    beta = beta < newMoveValue.expVal ? beta : newMoveValue.expVal;
+                }
                 moveIndex++;
+                if(beta <= alpha)
+                {
+                    return newMoveValue;
+                }
             }
         }
     }
@@ -104,6 +116,8 @@ struct moveValue minimax(struct board board, char player, int currDepth)
                 moveValue = bestMove[i];
             }
         }
+
+
     }
     return moveValue;
 }

@@ -21,4 +21,4 @@ void playLocal(struct board board);
 void playLocalAI(struct board board);
 int checkGameOver(char player, struct board board);
 void freeBoard(struct board* board);
-struct moveValue minimax(struct board board, char player, int currDepth);
+struct moveValue minimax(struct board board, char player, int currDepth, int alpha, int beta);

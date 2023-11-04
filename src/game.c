@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ttt.h"
+#include <limits.h>
 
 /** Game Over Method
  * This method checks if the game is over
@@ -136,7 +137,7 @@ void playLocalAI(struct board board)
     {        
         if(player == 0)
         {
-            struct moveValue moveValue = minimax(board,player,1);
+            struct moveValue moveValue = minimax(board,player,1,INT_MIN,INT_MAX);
             printf("best move is %d %d\n",moveValue.row,moveValue.col);
             printf("best move val is %d\n",moveValue.expVal);
         }
